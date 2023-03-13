@@ -5,11 +5,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    # Step 1
+      # Step 1
     - name: Checkout to repo
       uses: actions/checkout@v2
 
-    # Step 2
+      # Step 2
     - name: Set AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -17,12 +17,12 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    # Step 3
+      # Step 3
     - name: Create CodeDeploy Deployment
-    id: deploy
-    run: |
-      aws deploy create-deployment \
-      --application-name card_laravel \
-      --deployment-group-name card_laravel-develop \
-      --deployment-config-name CodeDeployDefault.OneAtTime \
-      --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+      id: deploy
+      run: |
+        aws deploy create-deployment \
+        --application-name card_laravel \
+        --deployment-group-name card_laravel-develop \
+        --deployment-config-name CodeDeployDefault.OneAtATime \
+        --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
